@@ -4,6 +4,7 @@ from django.db import models
 
 class TodoList(models.Model):
     description = models.CharField(max_length=200)
+    created_date = models.DateTimeField('Date created', auto_now_add=True)
 
     def __unicode__(self):
         return self.description

@@ -1,0 +1,10 @@
+<h1>{{ todo.description }}</h1>
+<ul>
+  {% for todo_item in todo.lineitem_set.all %}
+    <li>
+      <input type="checkbox" name="{{todo_item.description|slugify }}" value="{{todo_item.id}}"
+             {% if todo_item.is_done %} checked="checked"  {% endif %} />
+      {{ todo_item.description|title }}
+    </li>
+  {% endfor %}    
+</ul>
