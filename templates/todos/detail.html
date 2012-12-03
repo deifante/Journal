@@ -1,10 +1,20 @@
 <h1>{{ todo.description }}</h1>
-<ul>
-  {% for todo_item in todo.lineitem_set.all %}
-    <li>
-      <input type="checkbox" name="{{todo_item.description|slugify }}" value="{{todo_item.id}}"
-             {% if todo_item.is_done %} checked="checked"  {% endif %} />
-      {{ todo_item.description|title }}
-    </li>
-  {% endfor %}    
-</ul>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+{% if form.non_field_errors %}
+  <p>{{ form.non_field_errors }}</p>
+{% endif %}
+
+<form action="/todos/{{ todo.id }}/change/" method="post">
+  {% csrf_token %}
+  {% for line_item in todo.lineitem_set.all %}
+    <input type="checkbox" name="{{ todo.description|slugify }}-item-{{ line_item.id }}"
+           id="{{ todo.description|slugify }}-item-{{ line_item.id }}" value="{{ line_item.id }}"
+           {% if line_item.is_done %} checked="checked" {% endif %} />
+    <label for="{{ todo.description|slugify }}-item-{{ line_item.id }}">
+      {{ line_item.description|title }}
+    </label>
+  {% endfor %}
+  <input type="submit" value="Change" />
+</form>

@@ -1,0 +1,7 @@
+<h1>{{ todo.description }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<form action="/todos/{{ todo.id }}/change/" method="post">
+  {% include "snippets/form_element.html" %}
+  <p><input type="submit" value="Change" /></p>
+</form>
